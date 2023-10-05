@@ -49,32 +49,23 @@ banyak_data=len(df)
 #cetak dataframe
 print(df)
 
-#koefisien regresi kuadrat
-koefisien=np.polyfit(suhu,tekanan,2)
-polinomial=np.poly1d(koefisien)
-print(koefisien)
-print(polinomial)
-
-#buat matriks tiga dimensi dari dataframe
+#buat matriks tiga dimensi dari dataframe untuk menentukan koefisien a,b,c berdasarkan rumus A/X=B
 model1=np.array([[banyak_data,jumlah_suhu,totalkuadratsuhu],[jumlah_suhu,totalkuadratsuhu,totalpangkat3suhu],[totalkuadratsuhu,totalpangkat3suhu,totalpangkat4suhu]])
 model2=np.array([jumlah_tekanan,jumlah_suhuxtekanan,jumlah_kuadratsuhuxtekanan])
 modelakhir=np.linalg.solve(model1,model2)
-# print("koefisien regresi linier a,b,c adalah: ",modelakhir)
-# print(modelakhir[2])
-# print(modelakhir[1])
-# print(modelakhir[0])
+print("koefisien regresi c adalah: ",modelakhir[2])
+print("koefisien regresi b adalah: ",modelakhir[1])
+print("koefisien regresi a adalah: ",modelakhir[0])
 
 #visualisasi model berdasarkan sebaran data pada dataframe
 model_absis=np.arange(0,115,1)
 model_ordinat=88.13076448480557-(6.9290936191660295*model_absis)+(0.13761243001124693*(model_absis**2))
-model_ordinat_150=88.13076448480557-(6.9290936191660295*150)+(0.13761243001124693*(150**2))
 
-def PrediksiTekanan(suhu,a=modelakhir[0],x1=modelakhir[1],x2=modelakhir[2]):
+def PrediksiTekanan(suhu,a=88.13076448480557,x1=6.9290936191660295,x2=0.13761243001124693):
 	tekanan=a-(suhu*x1)+(x2*suhu*suhu)
 	return tekanan
 
 print("Tekanan Pada Suhu 150 adalah: ",PrediksiTekanan(150))
-print("Tekanan Pada Suhu model_ordinat_150: ",model_ordinat_150)
 	
 #tentukan tekanan apabila suhu mencapai 150 derajat celcius
 plt.scatter(suhu,tekanan)
