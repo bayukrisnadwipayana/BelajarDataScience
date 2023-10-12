@@ -53,9 +53,9 @@ print(df)
 model1=np.array([[banyak_data,jumlah_suhu,totalkuadratsuhu],[jumlah_suhu,totalkuadratsuhu,totalpangkat3suhu],[totalkuadratsuhu,totalpangkat3suhu,totalpangkat4suhu]])
 model2=np.array([jumlah_tekanan,jumlah_suhuxtekanan,jumlah_kuadratsuhuxtekanan])
 modelakhir=np.linalg.solve(model1,model2)
-print("koefisien regresi c adalah: ",modelakhir[2])
-print("koefisien regresi b adalah: ",modelakhir[1])
-print("koefisien regresi a adalah: ",modelakhir[0])
+print("koefisien regresi c adalah: ",modelakhir[2])#nilai c adalah 0.13761243001124693
+print("koefisien regresi b adalah: ",modelakhir[1])#nilai b adalah -6.9290936191660295
+print("koefisien regresi a adalah: ",modelakhir[0])#nilai a adalah 88.13076448480557
 
 #visualisasi model berdasarkan sebaran data pada dataframe
 model_absis=np.arange(0,115,1)
@@ -64,10 +64,11 @@ model_ordinat=88.13076448480557-(6.9290936191660295*model_absis)+(0.137612430011
 def PrediksiTekanan(suhu,a=88.13076448480557,x1=6.9290936191660295,x2=0.13761243001124693):
 	tekanan=a-(suhu*x1)+(x2*suhu*suhu)
 	return tekanan
-
-print("Tekanan Pada Suhu 150 adalah: ",PrediksiTekanan(150))
 	
 #tentukan tekanan apabila suhu mencapai 150 derajat celcius
+print("Tekanan Pada Suhu 150 adalah: ",PrediksiTekanan(150))
+	
+#visualisasikan data percobaan
 plt.scatter(suhu,tekanan)
 plt.xlabel("Suhu")
 plt.ylabel("Tekanan")
